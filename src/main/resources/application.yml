@@ -1,0 +1,24 @@
+spring:
+  data:
+    redis:
+      host: localhost
+      port: 6379
+  session:
+    store-type: redis
+    redis:
+      flush-mode: on-save
+      namespace: spring:session
+      timeout: 1800s
+
+  application:
+    name: gateway
+
+server:
+  port: 8080
+
+logging:
+  level:
+    com:
+      minidooray:
+        gateway:
+          client: DEBUG
