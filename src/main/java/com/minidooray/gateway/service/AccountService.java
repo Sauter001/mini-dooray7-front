@@ -6,6 +6,7 @@ import com.minidooray.gateway.dto.AccountDto;
 import com.minidooray.gateway.dto.AccountStatusDto;
 import com.minidooray.gateway.dto.ErrorResponse;
 import com.minidooray.gateway.exception.AccountException;
+import com.minidooray.gateway.util.ErrorUtils;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -32,46 +33,34 @@ public class AccountService {
     public void registerAccount(AccountDto accountDto, String path) {
         AccountDto encodeAccountDto = AccountDto.encodePasswordAccount(accountDto, passwordEncoder);
         HttpEntity<Object> request = new HttpEntity<>(encodeAccountDto, headers);
-        ResponseEntity<Map<String, Object>> response = restTemplate.exchange(host + path, HttpMethod.POST, request, new ParameterizedTypeReference<Map<String, Object>>() {});
 
-        Map<String, Object> responseBody = response.getBody();
-        if (responseBody != null && responseBody.get("code") instanceof Integer) {
-            int code = (int) responseBody.get("code");
-
-            if (code == 201) {
-                return;
-            }
-
-            if (code == 409) {
-                ErrorResponse errorResponse = objectMapper.convertValue(responseBody, ErrorResponse.class);
-                throw new AccountException(code, errorResponse);
-            }
+        try {
+            restTemplate.exchange(
+                    host + path,
+                    HttpMethod.POST,
+                    request,
+                    new ParameterizedTypeReference<Map<String, Object>>() {});
+        } catch (Exception e) {
+            ErrorUtils.handleError(e, objectMapper);
         }
     }
 
     public Account getAccountByUserId(String userId) {
         String url = host + "/accounts/userId/{userId}";
         HttpEntity<Object> request = new HttpEntity<>(headers);
-        ResponseEntity<Map<String, Object>> response = restTemplate.exchange(
-                url,
-                HttpMethod.GET,
-                request,
-                new ParameterizedTypeReference<Map<String, Object>>() {},
-                userId
-        );
 
-        Map<String, Object> responseBody = response.getBody();
-        if (responseBody != null && responseBody.get("code") instanceof Integer) {
-            int code = (int) responseBody.get("code");
-
-            if (code == 200) {
-                return objectMapper.convertValue(responseBody.get("data"), Account.class);
-            }
-
-            if (code == 404) {
-                ErrorResponse errorResponse = objectMapper.convertValue(responseBody, ErrorResponse.class);
-                throw new AccountException(code, errorResponse);
-            }
+        try {
+            ResponseEntity<Map<String, Object>> response = restTemplate.exchange(
+                    url,
+                    HttpMethod.GET,
+                    request,
+                    new ParameterizedTypeReference<Map<String, Object>>() {},
+                    userId
+            );
+            Map<String, Object> responseBody = response.getBody();
+            return objectMapper.convertValue(responseBody.get("data"), Account.class);
+        } catch (Exception e) {
+            ErrorUtils.handleError(e, objectMapper);
         }
         return null;
     }

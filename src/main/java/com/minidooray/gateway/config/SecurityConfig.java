@@ -1,5 +1,6 @@
 package com.minidooray.gateway.config;
 
+import com.minidooray.gateway.handler.CustomAuthenticationFailureHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -16,7 +17,7 @@ public class SecurityConfig {
 
         http.authorizeHttpRequests(authorizeRequests ->
                 authorizeRequests
-                        .requestMatchers("/", "/login", "/register", "/accounts", "/accounts/**").permitAll()
+                        .requestMatchers("/", "/login", "/register", "/accounts", "/error").permitAll()
                         .anyRequest().authenticated()
         );
 
@@ -25,6 +26,7 @@ public class SecurityConfig {
                         .usernameParameter("userId")
                         .loginProcessingUrl("/login")
                         .defaultSuccessUrl("/")
+                        .failureHandler(new CustomAuthenticationFailureHandler())
         );
 
         return http.build();

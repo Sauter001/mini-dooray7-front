@@ -1,14 +1,14 @@
 package com.minidooray.gateway.exception;
 
-import com.minidooray.gateway.dto.ErrorResponse;
-import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-@RestControllerAdvice
+@ControllerAdvice
 public class GlobalExceptionHandler {
     @ExceptionHandler(AccountException.class)
-    public ResponseEntity<ErrorResponse> accountExceptionHandler(AccountException e) {
-        return ResponseEntity.status(e.getStatusCode()).body(e.getErrorMessage());
+    public String accountExceptionHandler(AccountException e, Model model) {
+        model.addAttribute("errorMessage", e.getErrorMessage());
+        return "error";
     }
 }
