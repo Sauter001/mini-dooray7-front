@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="UTF-8">
-        <title>Welcome</title>
+        <title>Error</title>
         <style>
             * {
                 margin: 0;
@@ -26,17 +26,36 @@
             h1 {
                 font-size: 3em;
                 margin-bottom: 20px;
-                color: #333;
+                color: #000000;
                 text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            }
+
+            .error-container {
+                background-color: white;
+                padding: 20px;
+                border-radius: 10px;
+                box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+                width: 100%;
+                max-width: 400px;
+                text-align: left;
+            }
+
+            .error-details {
+                font-size: 1.2em;
+                margin: 15px 0;
+            }
+
+            .error-details strong {
+                font-weight: bold;
             }
 
             .button {
                 display: inline-block;
-                padding: 15px 30px;
-                margin: 10px;
+                padding: 10px 20px;
+                margin-top: 20px;
                 font-size: 1.2em;
                 color: white;
-                background-color: #4CAF50;
+                background-color: #008CBA;
                 text-decoration: none;
                 border-radius: 10px;
                 box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
@@ -44,31 +63,27 @@
             }
 
             .button:hover {
-                background-color: #45a049;
-                box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.2);
-            }
-
-            .button-secondary {
-                background-color: #008CBA;
-            }
-
-            .button-secondary:hover {
                 background-color: #007bb5;
                 box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.2);
-            }
-
-            .container {
-                display: flex;
-                justify-content: center;
-                gap: 20px;
             }
         </style>
     </head>
     <body>
-        <h1>Mini Dooray 7</h1>
-        <div class="container">
-            <a href="/login" class="button">Login</a>
-            <a href="/register" class="button button-secondary">Register</a>
+
+    <h1>ERROR</h1>
+
+    <div class="error-container">
+        <div class="error-details">
+            <strong>에러 코드 : </strong>
+            <span id="error-code" th:text="${errorMessage.code}">에러 코드가 여기에 표시됩니다.</span>
         </div>
+        <div class="error-details">
+            <strong>메시지 : </strong>
+            <span id="error-message" th:text="${errorMessage.message}">에러 메시지가 여기에 표시됩니다.</span>
+        </div>
+    </div>
+
+    <a href="/" class="button">홈으로 돌아가기</a>
+
     </body>
 </html>
