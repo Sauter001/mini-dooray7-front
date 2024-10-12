@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>마이페이지</title>
+        <style>
+            body {
+                background-color: lightskyblue;
+            }
+
+            #container {
+                margin: 20px 5% auto;
+                padding: 10px 10%;
+                background-color: white;
+                border-radius: 8px;
+            }
+
+            .user-label {
+                width: 200px;
+                margin: 0 10px;
+                font-weight: bold;
+                font-size: 20px;
+            }
+
+            .btn {
+                margin: 10px 0;
+                padding: 5px 10px;
+                border-radius: 10px;
+            }
+
+            .btn-danger {
+                color: white;
+                background-color: red;
+            }
+
+            .btn-danger:hover {
+                background-color: #cf0000;
+            }
+
+            /* 토글 처리용 */
+            .toggle {
+                width: 90px;
+                position: relative;
+                display: inline-block;
+                padding: 5px 0;
+                margin-bottom: 10px;
+            }
+
+            .toggle input {
+                opacity: 0;
+                width: 0;
+                height: 0;
+            }
+
+            /* slider */
+            .slider {
+                position: absolute;
+                cursor: pointer;
+                background-color: limegreen;
+                transition: 0.5s;
+                border-radius: 10px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                box-sizing: border-box;
+            }
+
+            .slider .active-text, .slider .inactive-text {
+                margin: 0 10px;
+                color: white;
+                position: absolute;
+            }
+
+            .slider .inactive-text {
+                right: 0;
+                display: none;
+            }
+
+            .slider:before {
+                position: absolute;
+                content: "";
+                height: 26px;
+                width: 40px;
+                right: 4px;
+                background-color: white;
+                transition: 0.1s;
+                border-radius: 10px;
+            }
+
+            input:checked + .slider {
+                background-color: #ccc;
+            }
+
+            input:checked + .slider .inactive-text {
+                display: block;
+            }
+
+            input:checked + .slider .active-text {
+                display: none;
+            }
+
+            input:checked + .slider:before {
+                transform: translateX(-40px);
+            }
+
+            /* slider ends */
+
+            #toggle-form {
+                display: none;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="container">
+            <h1>마이페이지</h1>
+
+            <!-- account로 patch 보내는 api 기입 필요 -->
+            <!-- 록은 자바스크립트로 요청 보내고 받아오는 방식으로 patch 통신 -->
+            <label class="toggle">
+                <input type="checkbox" id="active-toggle"
+                       th:checked="${account.status eq 'INACTIVE' or account.status eq 'WITHDRAWN'}"/>
+                <span class="slider">
+                <span class="inactive-text">휴면</span>
+                <span class="active-text">가입</span>
+                </span>
+            </label>
+
+            <div id="user-info">
+                <div>
+                    <span class="user-label">ID</span>
+                    <span th:text="${account.userId}">아이디1</span>
+                </div>
+                <div>
+                    <span class="user-label">✉</span>
+                    <span th:text="${account.email}">이메일@naver.com</span>
+                </div>
+                <hr>
+                <input type="button" id="withdraw-btn" class="btn btn-danger" value="탈퇴">
+            </div>
+        </div>
+    </body>
+    <script>
+        const accountId = [[${account.accountId}]];
+        // 토글 버튼 클릭 이벤트 처리
+        const toggle = document.querySelector(".toggle");
+        toggle.addEventListener("click", (e) => {
+            e.preventDefault();
+
+            const checkbox = document.getElementById("active-toggle");
+            checkbox.checked = !checkbox.checked;
+
+            // 토글의 상태에 따라 status 값 변경
+            const isChecked = document.getElementById("active-toggle").checked;
+            const status = isChecked ? 'INACTIVE' : 'REGISTERED';
+
+            // JSON 형식으로 PATCH 요청 보내기
+            fetch(`/accounts`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    status: status
+                })
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Toggle update success:', data);
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+        });
+
+        // 탈퇴 버튼 클릭 이벤트 처리
+        const withdrawBtn = document.getElementById("withdraw-btn");
+        withdrawBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+
+            // 탈퇴 요청을 JSON 형식으로 PATCH 요청으로 보내기
+            fetch(`/accounts`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    status: 'WITHDRAWN'
+                })
+            })
+                .then(response => {
+                    console.log(response);
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Withdrawal success:', data);
+                    // 로그인 페이지로 이동
+                    window.location.href = "/login";
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+        });
+    </script>
+</html>
