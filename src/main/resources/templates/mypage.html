@@ -14,6 +14,7 @@
                 padding: 10px 10%;
                 background-color: white;
                 border-radius: 8px;
+                position: relative; /* 로그아웃 버튼을 container 안에 배치하기 위해 relative로 설정 */
             }
 
             .user-label {
@@ -36,6 +37,27 @@
 
             .btn-danger:hover {
                 background-color: #cf0000;
+            }
+
+            /* 로그아웃 버튼 상단 오른쪽 (컨테이너 안쪽) */
+            .logout-form {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+            }
+
+            .logout-btn {
+                background-color: #4CAF50;
+                color: white;
+                padding: 8px 15px;
+                border: none;
+                border-radius: 8px;
+                cursor: pointer;
+                font-size: 14px;
+            }
+
+            .logout-btn:hover {
+                background-color: #45a049;
             }
 
             /* 토글 처리용 */
@@ -117,6 +139,11 @@
     </head>
     <body>
         <div id="container">
+            <!-- 로그아웃 버튼 컨테이너 안에 배치 -->
+            <form method="post" action="/logout" class="logout-form">
+                <button type="submit" class="logout-btn">로그아웃</button>
+            </form>
+
             <h1>마이페이지</h1>
 
             <!-- account로 patch 보내는 api 기입 필요 -->
@@ -125,9 +152,9 @@
                 <input type="checkbox" id="active-toggle"
                        th:checked="${account.status eq 'INACTIVE' or account.status eq 'WITHDRAWN'}"/>
                 <span class="slider">
-                <span class="inactive-text">휴면</span>
-                <span class="active-text">가입</span>
-                </span>
+                        <span class="inactive-text">휴면</span>
+                        <span class="active-text">가입</span>
+                        </span>
             </label>
 
             <div id="user-info">
@@ -198,17 +225,18 @@
                 })
             })
                 .then(response => {
-                    console.log(response);
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
+                    // console.log(response);
+                    // if (!response.ok) {
+                    //     throw new Error('Network response was not ok');
+                    // }
+                    window.location.href = "/";
+                    // return response.json();
                 })
-                .then(data => {
-                    console.log('Withdrawal success:', data);
-                    // 로그인 페이지로 이동
-                    window.location.href = "/login";
-                })
+                // .then(data => {
+                //     console.log('Withdrawal success:', data);
+                //     // 로그인 페이지로 이동
+                //     window.location.href = "/";
+                // })
                 .catch((error) => {
                     console.error('Error:', error);
                 });

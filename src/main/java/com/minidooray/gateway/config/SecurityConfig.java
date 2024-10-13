@@ -29,6 +29,13 @@ public class SecurityConfig {
                         .failureHandler(new CustomAuthenticationFailureHandler())
         );
 
+        http.logout(logout -> logout
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/")
+                .invalidateHttpSession(true)
+                .deleteCookies("SESSION")
+        );
+
         return http.build();
     }
 
