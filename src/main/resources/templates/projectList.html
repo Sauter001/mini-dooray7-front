@@ -179,10 +179,17 @@
             </span>
         </div>
 
+        <!-- 멤버 추가 버튼 -->
+        <form th:action="@{/projects/{projectId}/members(projectId=${project.projectId})}" method="GET" style="display: inline;">
+            <button type="submit" class="btn-add-member">멤버 추가</button>
+        </form>
+
+        <!-- 수정 버튼 -->
         <form th:action="@{/projects/update/{projectId}(projectId=${project.projectId})}" method="GET" style="display: inline;">
             <button type="submit" class="btn-edit">수정</button>
         </form>
 
+        <!-- 삭제 버튼 -->
         <form th:action="@{/projects/{projectId}(projectId=${project.projectId})}" method="POST" style="display: inline;">
             <input type="hidden" name="_method" value="DELETE" />
             <input type="hidden" th:value="${project.projectId}" name="projectId" />

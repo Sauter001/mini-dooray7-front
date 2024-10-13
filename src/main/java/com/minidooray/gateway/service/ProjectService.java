@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.minidooray.gateway.domain.Account;
 import com.minidooray.gateway.domain.Project;
+import com.minidooray.gateway.dto.ProjectMemberRegisterDto;
 import com.minidooray.gateway.dto.ProjectRegisterDto;
 import com.minidooray.gateway.dto.ProjectUpdateDto;
 import com.minidooray.gateway.util.ErrorUtils;
@@ -125,6 +126,26 @@ public class ProjectService {
                     request,
                     new ParameterizedTypeReference<Map<String, Object>>() {},
                     accountId
+            );
+        } catch (Exception e) {
+            ErrorUtils.handleError(e, objectMapper);
+        }
+    }
+
+    public void registerProjectMember(String projectId, ProjectMemberRegisterDto projectMemberDto, String accountId, String path) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.add("accountId", accountId);
+
+        HttpEntity<Object> request = new HttpEntity<>(projectMemberDto, headers);
+
+        try {
+            restTemplate.exchange(
+                    host + path,
+                    HttpMethod.POST,
+                    request,
+                    new ParameterizedTypeReference<Map<String, Object>>() {},
+                    projectId
             );
         } catch (Exception e) {
             ErrorUtils.handleError(e, objectMapper);

@@ -6,13 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="66a23a15-aa06-4c2c-a035-c90a1409e797" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/minidooray/gateway/controller/HomeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/minidooray/gateway/controller/HomeController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/minidooray/gateway/controller/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/minidooray/gateway/controller/LoginController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/minidooray/gateway/controller/ProjectController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/minidooray/gateway/controller/ProjectController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/minidooray/gateway/controller/RegisterController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/minidooray/gateway/controller/RegisterController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/minidooray/gateway/domain/Project.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/minidooray/gateway/domain/Project.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/minidooray/gateway/service/AccountService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/minidooray/gateway/service/AccountService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/minidooray/gateway/service/ProjectService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/minidooray/gateway/service/ProjectService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/projectList.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/projectList.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -82,13 +78,13 @@
     <option name="notificationShown" value="true" />
   </component>
   <component name="RunManager" selected="Spring Boot.GatewayApplication">
-    <configuration name="account | 계정 아이디로 계정 정보 조회" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/http/account.http" index="3" requestIdentifier="계정 아이디로 계정 정보 조회" runType="Run single request">
+    <configuration name="account | 사용자 아이디로 계정 정보 조회" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/http/account.http" index="2" requestIdentifier="사용자 아이디로 계정 정보 조회" runType="Run single request">
       <method v="2" />
     </configuration>
     <configuration name="account | 계정 생성" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/http/account.http" requestIdentifier="계정 생성" runType="Run single request">
       <method v="2" />
     </configuration>
-    <configuration name="account | 사용자 아이디로 계정 정보 조회" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/http/account.http" index="2" requestIdentifier="사용자 아이디로 계정 정보 조회" runType="Run single request">
+    <configuration name="account | 계정 아이디로 계정 정보 조회" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/http/account.http" index="3" requestIdentifier="계정 아이디로 계정 정보 조회" runType="Run single request">
       <method v="2" />
     </configuration>
     <configuration name="GatewayApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
@@ -101,7 +97,7 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="HTTP Request.account | 사용자 아이디로 계정 정보 조회" />
+      <item itemvalue="HTTP Request.account | 계정 아이디로 계정 정보 조회" />
       <item itemvalue="HTTP Request.account | 계정 생성" />
       <item itemvalue="Spring Boot.GatewayApplication" />
     </list>
@@ -139,7 +135,7 @@
       <workItem from="1728804786720" duration="240000" />
       <workItem from="1728805131705" duration="81000" />
       <workItem from="1728805222964" duration="203000" />
-      <workItem from="1728805539297" duration="12540000" />
+      <workItem from="1728805539297" duration="17451000" />
     </task>
     <servers />
   </component>
@@ -161,33 +157,28 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/minidooray/gateway/service/AccountService.java</url>
-          <line>100</line>
+          <line>112</line>
           <option name="timeStamp" value="46" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/minidooray/gateway/service/AccountService.java</url>
-          <line>109</line>
+          <line>121</line>
           <option name="timeStamp" value="47" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/minidooray/gateway/service/AccountService.java</url>
-          <line>111</line>
+          <line>123</line>
           <option name="timeStamp" value="48" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/minidooray/gateway/controller/ProjectController.java</url>
-          <line>42</line>
-          <option name="timeStamp" value="53" />
+          <url>file://$PROJECT_DIR$/src/main/java/com/minidooray/gateway/controller/ProjectMemberController.java</url>
+          <line>22</line>
+          <option name="timeStamp" value="65" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/minidooray/gateway/controller/ProjectController.java</url>
-          <line>48</line>
-          <option name="timeStamp" value="54" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/minidooray/gateway/controller/ProjectController.java</url>
-          <line>49</line>
-          <option name="timeStamp" value="55" />
+          <url>file://$PROJECT_DIR$/src/main/java/com/minidooray/gateway/service/ProjectService.java</url>
+          <line>142</line>
+          <option name="timeStamp" value="67" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
