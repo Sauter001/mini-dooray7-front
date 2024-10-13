@@ -19,7 +19,7 @@ import java.util.Map;
 public class AccountService {
     private final RestTemplate restTemplate;
     private final PasswordEncoder passwordEncoder;
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper;
 
     private static final String host = "http://localhost:8081";
 
