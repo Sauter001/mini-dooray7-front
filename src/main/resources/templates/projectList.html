@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>프로젝트 목록</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: lightskyblue;
+            background-image: url('https://www.transparenttextures.com/patterns/clouds.png');
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            position: relative;
+        }
+
+        h2 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .project-list-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            width: 100%; /* 전체 너비 */
+            max-width: 90vw; /* 화면 너비의 90%만 차지 */
+            margin: 0 5vw; /* 양쪽에 5%의 마진을 추가 */
+            position: relative;
+        }
+
+        .project-item {
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            background-color: #f9f9f9;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .project-item:hover {
+            background-color: #f1f1f1;
+        }
+
+        .project-item a {
+            text-decoration: none;
+            color: lightskyblue;
+            font-weight: bold;
+        }
+
+        .project-item a:hover {
+            color: deepskyblue;
+        }
+
+        button {
+            padding: 8px 15px;
+            background-color: lightskyblue;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: deepskyblue;
+        }
+
+        /* 프로젝트 생성 버튼 상단 오른쪽 배치 */
+        .create-project-btn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .create-project-btn:hover {
+            background-color: #45a049;
+        }
+
+        /* 오른쪽 상단 버튼들 배치 */
+        .top-right-menu {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            display: flex;
+            gap: 10px; /* 버튼 간의 간격 */
+        }
+
+        /* 마이페이지 스타일: 밑줄 제거 및 다른 색상 */
+        .top-right-menu .button {
+            background-color: #008CBA;
+            color: white;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-decoration: none; /* 밑줄 제거 */
+        }
+
+        .top-right-menu .button:hover {
+            background-color: #007bb5;
+        }
+
+        /* 로그아웃 버튼 스타일: 다른 배경 색상 */
+        .top-right-menu .logout-btn {
+            background-color: #f44336; /* 붉은 색 */
+            padding: 8px 15px;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .top-right-menu .logout-btn:hover {
+            background-color: #d32f2f;
+        }
+
+    </style>
+</head>
+<body>
+
+<!-- 프로젝트 생성 버튼, 마이페이지, 로그아웃을 오른쪽 상단에 배치 -->
+<div class="top-right-menu">
+    <form action="/projects/register" method="GET" class="create-project-form">
+        <button type="submit" class="create-project-btn">프로젝트 생성</button>
+    </form>
+
+    <a href="/accounts" class="button">마이페이지</a>
+
+    <form method="post" action="/logout" class="logout-form">
+        <button type="submit" class="logout-btn">로그아웃</button>
+    </form>
+</div>
+
+<div class="project-list-container">
+    <h2>프로젝트 목록</h2>
+
+    <!-- 프로젝트 목록을 Thymeleaf로 동적 렌더링 -->
+    <div th:if="${projectList.empty}">
+        <p>프로젝트가 없습니다.</p>
+    </div>
+
+    <div th:each="project : ${projectList}" class="project-item">
+        <div>
+            <strong>프로젝트 ID:</strong> <span th:text="${project.projectId}">프로젝트 ID</span>
+        </div>
+        <div>
+            <strong>프로젝트 이름:</strong> <span th:text="${project.projectName}">프로젝트 이름</span>
+        </div>
+        <div>
+            <strong>프로젝트 상태:</strong>
+            <span th:switch="${project.projectStatus}">
+                <span th:case="'active'">활성</span>
+                <span th:case="'inactive'">휴면</span>
+                <span th:case="'complete'">종료</span>
+            </span>
+        </div>
+
+        <form th:action="@{/projects/update/{projectId}(projectId=${project.projectId})}" method="GET" style="display: inline;">
+            <button type="submit" class="btn-edit">수정</button>
+        </form>
+
+        <form th:action="@{/projects/{projectId}(projectId=${project.projectId})}" method="POST" style="display: inline;">
+            <input type="hidden" name="_method" value="DELETE" />
+            <input type="hidden" th:value="${project.projectId}" name="projectId" />
+            <button type="submit" class="btn-delete">삭제</button>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

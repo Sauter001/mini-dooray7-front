@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>프로젝트 수정</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: lightskyblue;
+            background-image: url('https://www.transparenttextures.com/patterns/clouds.png');
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        h2 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .edit-project-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        input[type="text"], select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: lightskyblue;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: deepskyblue;
+        }
+    </style>
+</head>
+<body>
+
+<div class="edit-project-container">
+    <h2>프로젝트 수정</h2>
+
+    <!-- PUT 요청을 보내기 위해 hidden field 사용 -->
+    <form th:action="@{/projects/{projectId}(projectId=${project.projectId})}" method="POST">
+        <input type="hidden" name="_method" value="PUT" />
+        <div>
+            <label for="projectName">프로젝트 이름</label>
+            <input type="text" id="projectName" name="projectName" th:value="${project.projectName}" placeholder="프로젝트 이름 입력" required />
+        </div>
+
+        <div>
+            <label for="projectStatus">프로젝트 상태</label>
+            <select id="projectStatus" name="projectStatus" required>
+                <option value="ACTIVE" th:selected="${project.projectStatus == 'active'}">활성</option>
+                <option value="INACTIVE" th:selected="${project.projectStatus == 'inactive'}">휴면</option>
+                <option value="COMPLETE" th:selected="${project.projectStatus == 'complete'}">종료</option>
+            </select>
+        </div>
+
+        <div>
+            <button type="submit">수정하기</button>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>

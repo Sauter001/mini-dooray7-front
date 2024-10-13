@@ -25,8 +25,7 @@ public class RegisterController {
     public String registerForm() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
-            // 프로젝트 리스트 보여주기
-            log.info("인증됨");
+            return "redirect:/projects";
         }
         return "register";
     }

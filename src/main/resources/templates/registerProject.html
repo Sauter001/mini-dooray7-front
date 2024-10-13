@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>프로젝트 생성</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: lightskyblue;
+            background-image: url('https://www.transparenttextures.com/patterns/clouds.png');
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        h2 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .create-project-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: lightskyblue;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: deepskyblue;
+        }
+    </style>
+</head>
+<body>
+
+<div class="create-project-container">
+    <h2>프로젝트 생성</h2>
+
+    <form action="/projects" method="POST">
+        <div>
+            <label for="projectName">프로젝트 이름</label>
+            <input type="text" id="projectName" name="projectName" placeholder="프로젝트 이름 입력" required />
+        </div>
+
+        <div>
+            <button type="submit">생성하기</button>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>
