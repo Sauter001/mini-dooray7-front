@@ -4,25 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="66a23a15-aa06-4c2c-a035-c90a1409e797" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/minidooray/gateway/config/AppConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/minidooray/gateway/config/AppConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/minidooray/gateway/service/AccountService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/minidooray/gateway/service/AccountService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/minidooray/gateway/config/AppConfig.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/minidooray/gateway/controller/AccountController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/minidooray/gateway/service/AccountService$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/minidooray/gateway/service/AccountService$2.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/minidooray/gateway/service/AccountService$3.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/minidooray/gateway/service/AccountService$4.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/minidooray/gateway/service/AccountService.class" beforeDir="false" />
-    </list>
+    <list default="true" id="66a23a15-aa06-4c2c-a035-c90a1409e797" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -48,6 +30,9 @@
   &quot;associatedIndex&quot;: 4
 }</component>
   <component name="ProjectId" id="2nBxJGLhIbZN2D2UsQrPZEM9HVp" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -145,7 +130,7 @@
       <workItem from="1728804786720" duration="240000" />
       <workItem from="1728805131705" duration="81000" />
       <workItem from="1728805222964" duration="203000" />
-      <workItem from="1728805539297" duration="194000" />
+      <workItem from="1728805539297" duration="543000" />
     </task>
     <servers />
   </component>
