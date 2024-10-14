@@ -23,7 +23,7 @@ public class ProjectService {
     private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper;
 
-    private static final String host = "http://localhost:8082";
+    private static final String host = "http://localhost:8083";
 
     public List<Project> getProjectList(String accountId, String path) {
         HttpHeaders headers = new HttpHeaders();

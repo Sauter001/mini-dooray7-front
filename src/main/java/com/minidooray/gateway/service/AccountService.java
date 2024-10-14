@@ -18,11 +18,11 @@ import java.util.Map;
 @Service
 @RequiredArgsConstructor
 public class AccountService {
+    private static final String ACCOUNTS_HOST = "http://localhost:8083";
+    private static final String TASK_HOST = "http://localhost:8082/members";
     private final RestTemplate restTemplate;
     private final PasswordEncoder passwordEncoder;
     private final ObjectMapper objectMapper;
-
-    private static final String host = "http://localhost:8081";
 
     public void registerAccount(AccountDto accountDto, String path) {
         AccountDto encodeAccountDto = AccountDto.encodePasswordAccount(accountDto, passwordEncoder);
@@ -33,19 +33,23 @@ public class AccountService {
 
         try {
             Map<String, Object> responseBody = restTemplate.exchange(
-                    host + path,
-                    HttpMethod.POST,
-                    request,
-                    new ParameterizedTypeReference<Map<String, Object>>() {})
+                            ACCOUNTS_HOST + path,
+                            HttpMethod.POST,
+                            request,
+                            new ParameterizedTypeReference<Map<String, Object>>() {
+                            }
+                    )
                     .getBody();
-            AccountRegisterResponseDto responseDto = objectMapper.convertValue(responseBody.get("data"), AccountRegisterResponseDto.class);
+            AccountRegisterResponseDto responseDto = objectMapper.convertValue(responseBody.get("data"),
+                                                                               AccountRegisterResponseDto.class);
 
             request = new HttpEntity<>(headers);
             restTemplate.exchange(
-                    "http://localhost:8082/{accountId}",
+                    TASK_HOST + "/{accountId}",
                     HttpMethod.POST,
                     request,
-                    new ParameterizedTypeReference<Map<String, Object>>() {},
+                    new ParameterizedTypeReference<Map<String, Object>>() {
+                    },
                     responseDto.getAccountId()
             );
         } catch (Exception e) {
@@ -54,7 +58,7 @@ public class AccountService {
     }
 
     public Account getAccountByUserId(String userId) {
-        String url = host + "/accounts/{userId}";
+        String url = ACCOUNTS_HOST + "/accounts/{userId}";
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -66,7 +70,8 @@ public class AccountService {
                     url,
                     HttpMethod.GET,
                     request,
-                    new ParameterizedTypeReference<Map<String, Object>>() {},
+                    new ParameterizedTypeReference<Map<String, Object>>() {
+                    },
                     userId
             );
             Map<String, Object> responseBody = response.getBody();
@@ -86,10 +91,11 @@ public class AccountService {
 
         try {
             ResponseEntity<Map<String, Object>> response = restTemplate.exchange(
-                    host + path,
+                    ACCOUNTS_HOST + path,
                     HttpMethod.GET,
                     request,
-                    new ParameterizedTypeReference<Map<String, Object>>() {},
+                    new ParameterizedTypeReference<Map<String, Object>>() {
+                    },
                     accountId
             );
 
@@ -111,10 +117,11 @@ public class AccountService {
 
         try {
             ResponseEntity<Map<String, Object>> response = restTemplate.exchange(
-                    host + path,
+                    ACCOUNTS_HOST + path,
                     HttpMethod.PATCH,
                     request,
-                    new ParameterizedTypeReference<Map<String, Object>>() {},
+                    new ParameterizedTypeReference<Map<String, Object>>() {
+                    },
                     accountId
             );
 
