@@ -1,6 +1,9 @@
 package com.minidooray.gateway.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.minidooray.gateway.client.AccountClient;
+import com.minidooray.gateway.client.AccountRegisterClient;
+import com.minidooray.gateway.client.TaskClient;
 import com.minidooray.gateway.domain.Account;
 import com.minidooray.gateway.dto.AccountDto;
 import com.minidooray.gateway.dto.AccountRegisterResponseDto;
@@ -24,61 +27,42 @@ public class AccountService {
     private final PasswordEncoder passwordEncoder;
     private final ObjectMapper objectMapper;
 
+    // feign clients
+    private final AccountRegisterClient accountRegisterClient;
+    private final AccountClient accountClient;
+    private final TaskClient taskClient;
+
     public void registerAccount(AccountDto accountDto, String path) {
         AccountDto encodeAccountDto = AccountDto.encodePasswordAccount(accountDto, passwordEncoder);
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-
-        HttpEntity<Object> request = new HttpEntity<>(encodeAccountDto, headers);
 
         try {
-            Map<String, Object> responseBody = restTemplate.exchange(
-                            ACCOUNTS_HOST + path,
-                            HttpMethod.POST,
-                            request,
-                            new ParameterizedTypeReference<Map<String, Object>>() {
-                            }
-                    )
-                    .getBody();
-            AccountRegisterResponseDto responseDto = objectMapper.convertValue(responseBody.get("data"),
-                                                                               AccountRegisterResponseDto.class);
-
-            request = new HttpEntity<>(headers);
-            restTemplate.exchange(
-                    TASK_HOST + "/{accountId}",
-                    HttpMethod.POST,
-                    request,
-                    new ParameterizedTypeReference<Map<String, Object>>() {
-                    },
-                    responseDto.getAccountId()
+            path = slicePath(path);
+            Map<String, Object> responseBody = accountRegisterClient.registerAccount(path, encodeAccountDto);
+            AccountRegisterResponseDto responseDto = objectMapper.convertValue(
+                    responseBody.get("data"),
+                    AccountRegisterResponseDto.class
             );
+
+            taskClient.registerAccountToMember(responseDto.getAccountId());
         } catch (Exception e) {
             ErrorUtils.handleError(e, objectMapper);
         }
     }
 
     public Account getAccountByUserId(String userId) {
-        String url = ACCOUNTS_HOST + "/accounts/{userId}";
-
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         HttpEntity<Object> request = new HttpEntity<>(headers);
 
         try {
-            ResponseEntity<Map<String, Object>> response = restTemplate.exchange(
-                    url,
-                    HttpMethod.GET,
-                    request,
-                    new ParameterizedTypeReference<Map<String, Object>>() {
-                    },
-                    userId
-            );
+            ResponseEntity<Map<String, Object>> response = accountClient.getAccountByUserId(userId);
             Map<String, Object> responseBody = response.getBody();
             return objectMapper.convertValue(responseBody.get("data"), Account.class);
         } catch (Exception e) {
             ErrorUtils.handleError(e, objectMapper);
         }
+
         return null;
     }
 
@@ -90,14 +74,8 @@ public class AccountService {
         HttpEntity<Object> request = new HttpEntity<>(headers);
 
         try {
-            ResponseEntity<Map<String, Object>> response = restTemplate.exchange(
-                    ACCOUNTS_HOST + path,
-                    HttpMethod.GET,
-                    request,
-                    new ParameterizedTypeReference<Map<String, Object>>() {
-                    },
-                    accountId
-            );
+            path = slicePath(path);
+            ResponseEntity<Map<String, Object>> response = accountClient.getAccountByAccountId(accountId);
 
             Map<String, Object> responseBody = response.getBody();
             return objectMapper.convertValue(responseBody.get("data"), Account.class);
@@ -116,14 +94,7 @@ public class AccountService {
         HttpEntity<Object> request = new HttpEntity<>(statusDto, headers);
 
         try {
-            ResponseEntity<Map<String, Object>> response = restTemplate.exchange(
-                    ACCOUNTS_HOST + path,
-                    HttpMethod.PATCH,
-                    request,
-                    new ParameterizedTypeReference<Map<String, Object>>() {
-                    },
-                    accountId
-            );
+            ResponseEntity<Map<String, Object>> response = accountClient.updateStatus(accountId, statusDto);
 
             Map<String, Object> responseBody = response.getBody();
             return objectMapper.convertValue(responseBody.get("data"), Account.class);
@@ -131,5 +102,9 @@ public class AccountService {
             ErrorUtils.handleError(e, objectMapper);
         }
         return null;
+    }
+
+    private String slicePath(String path) {
+        return path.startsWith("/") ? path.substring(1) : path;
     }
 }

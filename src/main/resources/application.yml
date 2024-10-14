@@ -12,7 +12,6 @@ spring:
 
   application:
     name: gateway
-  cloud:
 
   mvc:
     hidden-method:
@@ -22,9 +21,18 @@ spring:
 server:
   port: 8080
 
+feign:
+  httpclient:
+    enabled: true
+
 logging:
   level:
     com:
       minidooray:
         gateway:
           client: DEBUG
+accounts:
+  host: http://localhost:8083
+tasks:
+  account-host: http://localhost:8082/members
+  host: http://localhost:8082
